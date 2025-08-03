@@ -26,11 +26,16 @@ func main() {
 	rawFilesNum := len(rawFiles)
 	deletedNum := 0
 	for _, rawFile := range rawFiles {
-		jpgFile := strings.Replace(rawFile, rawDir, directory, -1)
-		jpgFile = strings.Replace(jpgFile, ".RAF", ".JPG", -1)
+		rawFile := strings.Replace(rawFile, rawDir, directory, -1)
 
-		// If JPG file exists, skip
-		if _, err := os.Stat(jpgFile); err == nil {
+		// If JPG or jpg file exists, skip
+		jpgFileUpper := strings.Replace(rawFile, ".RAF", ".JPG", -1)
+		if _, err := os.Stat(jpgFileUpper); err == nil {
+			continue
+		}
+
+		jpgFileLower := strings.Replace(rawFile, ".RAF", ".jpg", -1)
+		if _, err := os.Stat(jpgFileLower); err == nil {
 			continue
 		}
 
